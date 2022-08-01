@@ -26,6 +26,10 @@ public class Postagem {
     @UpdateTimestamp
     private LocalDateTime data;
 
+    @ManyToOne
+    @JoinColumn(name = "tema_id", nullable = true)    // cria um postagem_id na tabela postagens para criar relacionamento no bd
+    private Tema tema;
+
     public Long getId() {
         return id;
     }
@@ -58,7 +62,11 @@ public class Postagem {
         this.data = data;
     }
 
+    public Tema getTema() {
+        return tema;
+    }
 
-
-
+    public void setTema(Tema tema) {
+        this.tema = tema;
+    }
 }

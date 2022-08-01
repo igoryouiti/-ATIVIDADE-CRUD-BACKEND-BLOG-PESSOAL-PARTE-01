@@ -3,6 +3,7 @@ package com.blogpessoal.blogpessoal.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 
 @Entity
@@ -16,6 +17,9 @@ public class Tema {
     @NotBlank
     @Size(min = 3, max = 255)
     private String descricao;
+
+    @OneToMany(mappedBy = "tema")  // nome do objeto tema na classe postagens
+    private List<Postagem> postagens;
 
 
     public Long getId() {
