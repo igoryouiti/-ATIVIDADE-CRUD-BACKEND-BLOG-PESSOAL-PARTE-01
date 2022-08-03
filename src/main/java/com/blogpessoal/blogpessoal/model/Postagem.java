@@ -1,5 +1,6 @@
 package com.blogpessoal.blogpessoal.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -27,7 +28,8 @@ public class Postagem {
     private LocalDateTime data;
 
     @ManyToOne
-    @JoinColumn(name = "tema_id", nullable = true)    // cria um postagem_id na tabela postagens para criar relacionamento no bd
+    // @JoinColumn(name = "tema_id", nullable = true)    // cria um postagem_id na tabela postagens para criar relacionamento no bd
+    @JsonIgnoreProperties("postagem")
     private Tema tema;
 
     public Long getId() {

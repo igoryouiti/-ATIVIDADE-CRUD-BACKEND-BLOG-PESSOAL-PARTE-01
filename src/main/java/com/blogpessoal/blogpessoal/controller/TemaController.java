@@ -26,9 +26,9 @@ public class TemaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Tema> getById(@PathVariable Long id){
+    public ResponseEntity<Tema> getById(@PathVariable Long id){ // @PathVariable valida as especificações na model
         return temaRepository.findById(id)
-                .map(resposta -> ResponseEntity.ok(resposta))
+                .map(resposta -> ResponseEntity.ok(resposta))   // map do optional, nada há ver com hashmap
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
