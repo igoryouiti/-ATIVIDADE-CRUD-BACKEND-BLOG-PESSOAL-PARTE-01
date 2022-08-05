@@ -29,11 +29,11 @@ public class Postagem {
 
     @ManyToOne
     // @JoinColumn(name = "tema_id", nullable = true)    // cria um postagem_id na tabela postagens para criar relacionamento no bd
-    @JsonIgnoreProperties("postagem")
+    @JsonIgnoreProperties("postagens")
     private Tema tema;
 
     @ManyToOne
-    @JsonIgnoreProperties("postagem")
+    @JsonIgnoreProperties("postagens")
     private Usuario usuario;
 
     public Long getId() {
