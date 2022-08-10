@@ -19,18 +19,15 @@ import java.util.Optional;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UsuarioController {
 
-
     @Autowired
     private UsuarioRepository usuarioRepository;
 
     @Autowired
     private UsuarioService usuarioService;
 
-
     @GetMapping("/all")
     public ResponseEntity<List<Usuario>> getAll(){
         return ResponseEntity.ok(usuarioRepository.findAll());
-
     }
 
     @GetMapping("/{id}")
@@ -45,7 +42,6 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioRepository.findAllByUsuarioContainingIgnoreCase(usuario));
     }
 
-
     @PostMapping("/logar")
     public ResponseEntity<UsuarioLogin> autenticationUsuario(
             @RequestBody Optional<UsuarioLogin> usuario) {
@@ -54,7 +50,6 @@ public class UsuarioController {
                 .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
 
-
     @PostMapping("/cadastrar")
     public ResponseEntity<Usuario> post(@Valid @RequestBody Usuario usuario){
         return usuarioService.cadastrarUsuario(usuario)
@@ -62,7 +57,7 @@ public class UsuarioController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @PutMapping
+    @PutMapping("/atualizar")
     public ResponseEntity<Usuario> put(@Valid @RequestBody Usuario usuario){
         return usuarioService.atualizarUsuario(usuario)
                 .map(resposta -> ResponseEntity.status(HttpStatus.OK)
