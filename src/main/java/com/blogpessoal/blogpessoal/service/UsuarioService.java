@@ -79,7 +79,7 @@ public class UsuarioService {
              * diferente do usuário do Id do Usuário enviado na requisição, a Atualização dos
              * dados do Usuário não pode ser realizada.
              */
-            if ( (buscaUsuario.isPresent()) && ( buscaUsuario.get().getId() != usuario.getId()))
+            if ((buscaUsuario.isPresent()) && (buscaUsuario.get().getId() != usuario.getId()))
                 throw new ResponseStatusException(
                         HttpStatus.BAD_REQUEST, "Usuário já existe!", null);
 
