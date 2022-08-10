@@ -1,7 +1,9 @@
 package com.blogpessoal.blogpessoal.controller;
 
 import com.blogpessoal.blogpessoal.model.Usuario;
+import com.blogpessoal.blogpessoal.model.UsuarioLogin;
 import com.blogpessoal.blogpessoal.repository.UsuarioRepository;
+import com.blogpessoal.blogpessoal.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +23,11 @@ public class UsuarioController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @GetMapping
+    @Autowired
+    private UsuarioService usuarioService;
+
+
+    @GetMapping("/all")
     public ResponseEntity<List<Usuario>> getAll(){
         return ResponseEntity.ok(usuarioRepository.findAll());
 
@@ -39,15 +45,26 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioRepository.findAllByUsuarioContainingIgnoreCase(usuario));
     }
 
-    @PostMapping
+
+    @PostMapping("/logar")
+    public ResponseEntity<UsuarioLogin> autenticationUsuario(
+            @RequestBody Optional<UsuarioLogin> usuario) {
+        return usuarioService.autenticarUsuario(usuario)
+                .map(resp -> ResponseEntity.ok(resp))
+                .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+    }
+
+
+    @PostMapping("/cadastrar")
     public ResponseEntity<Usuario> post(@Valid @RequestBody Usuario usuario){
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(usuarioRepository.save(usuario));
+        return usuarioService.cadastrarUsuario(usuario)
+                .map(resp -> ResponseEntity.status(HttpStatus.CREATED).body(resp))
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @PutMapping
     public ResponseEntity<Usuario> put(@Valid @RequestBody Usuario usuario){
-        return usuarioRepository.findById(usuario.getId())
+        return usuarioService.atualizarUsuario(usuario)
                 .map(resposta -> ResponseEntity.status(HttpStatus.OK)
                         .body(usuarioRepository.save(usuario)))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
