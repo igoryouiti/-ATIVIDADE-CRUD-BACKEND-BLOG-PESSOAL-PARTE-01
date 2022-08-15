@@ -54,7 +54,7 @@ public class UsuarioController {
     public ResponseEntity<Usuario> post(@Valid @RequestBody Usuario usuario){
         return usuarioService.cadastrarUsuario(usuario)
                 .map(resp -> ResponseEntity.status(HttpStatus.CREATED).body(resp))
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+                .orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
     @PutMapping("/atualizar")
