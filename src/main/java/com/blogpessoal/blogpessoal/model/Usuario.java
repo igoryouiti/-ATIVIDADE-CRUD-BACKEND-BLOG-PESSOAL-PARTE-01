@@ -3,6 +3,7 @@ package com.blogpessoal.blogpessoal.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -19,8 +20,8 @@ public class Usuario {
     @Size(min = 3, max = 255)
     private String nome;
 
-    @NotBlank
-    @Size(min = 3, max = 255)
+    @Email
+    @Column(unique = true)
     private String usuario;
 
     @NotBlank
@@ -34,6 +35,15 @@ public class Usuario {
     @JsonIgnoreProperties("usuario")
     private List<Postagem> postagens;
 
+    public Usuario(Long id, String nome, String usuario, String senha, String foto) {
+        this.id = id;
+        this.nome = nome;
+        this.usuario = usuario;
+        this.senha = senha;
+        this.foto = foto;
+    }
+
+    public Usuario(){}
 
     public Long getId() {
         return id;
