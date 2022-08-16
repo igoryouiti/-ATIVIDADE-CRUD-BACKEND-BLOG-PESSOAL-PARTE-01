@@ -1,10 +1,12 @@
 package com.blogpessoal.blogpessoal.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -20,8 +22,9 @@ public class Usuario {
     @Size(min = 3, max = 255)
     private String nome;
 
+    @Schema(example = "email@email.com.br")
+    @NotNull(message = "O atributo Usuário é Obrigatório!")
     @Email
-    @Column(unique = true)
     private String usuario;
 
     @NotBlank
